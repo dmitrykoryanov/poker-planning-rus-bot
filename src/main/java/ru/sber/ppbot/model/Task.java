@@ -1,20 +1,22 @@
 package ru.sber.ppbot.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import java.util.EnumSet;
-import java.util.List;
+import java.io.Serializable;
+import java.util.*;
 
+/**
+ * Task entity
+ */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @RedisHash("task")
+@Builder
+@ToString
 public class Task {
 
     @Id
@@ -22,7 +24,29 @@ public class Task {
 
     private String name;
 
-    //private List<Complexity> complexities;
+    private Map<String, Complexity> complexities = new HashMap<>();
 
-    private EnumSet<Complexity> complexities;
+    public Map<String, Complexity> getComplexities() {
+
+        if(complexities == null){
+            return new HashMap<>();
+        }
+        return complexities;
+    }
+
+
+    public double getComplexity(){
+
+        if (complexities == null) {
+            return 0.0;
+        }
+
+        return this.complexities
+                .values()
+                .stream()
+                .map(Complexity::getComplexity)
+                .mapToDouble(i -> (double) i)
+                .average()
+                .orElse(0.0);
+    }
 }
