@@ -15,9 +15,11 @@ https://api.telegram.org/bot<telegram.botToken>/setWebhook?url=<telegram.webhook
 3. Как получить webhook локально на компьютере (для тестирования, разработки - при запуске 
 приложения из идеи): 
       * Скачиваем ngrok (https://ngrok.com/download).
-      * Запускаем ngrok
-      * Выполняем команду **ngrok** **http 8080 --host-header=site.local в ngrok** (**8080** - порт 
+      * Запускаем ngrok (приложение может быть заблокировано антивирусом -> в таком случае необходимо 
+   добавить его в исключения)
+      * Выполняем команду **ngrok** **http 8080 --host-header=site.local** в ngrok (**8080** - порт 
    приложения по умолчанию, если в настройках явно указан **server.port** - указываем его)
+   ![img_2.png](img_2.png)
       * Получаем картинку вида
    ![img_1.png](img_1.png)
       * В строке Forwarding наш webhook, который, как было сказано выше, необходимо прописать в 
